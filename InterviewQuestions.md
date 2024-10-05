@@ -43,12 +43,84 @@
     const {a,b,...rest} = {a: 1, b: 2, c: 3, d: 4};
     console.log(rest); // {c: 3, d: 4}
     ```
+
+
 3. Why we use ***.bind*** in class component?
 
     Answer: .bind is used to bind the function to the class component. It is used to bind the function to the class component so that the function can be used as a method of the class component.
 
 
+4. What is difference between debouncing and throttling?
 
+    Answer: Debouncing and throttling are both techniques used to manage high-frequency events, but they serve different purposes and have different implementations.
+
+    Debouncing:
+    - Debouncing is used to ensure that a function is not called too frequently.
+    - It delays the execution of a function until a certain amount of time has passed without the function being called again.
+    - If the function is called again within the delay, the timer is reset.
+    - Debouncing is useful for optimizing performance by reducing the number of times a function is called.
+
+    Example of debouncing:
+    ```javascript
+    function debounce(func, delay) {
+      let timeoutId;
+      return function (...args) {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+          func.apply(this, args);
+        }, delay);
+      };
+    }
+
+    // Usage example:
+    const expensiveOperation = () => {
+      console.log('Performing expensive operation...');
+      // ... some expensive computation
+    };
+
+    const debouncedOperation = debounce(expensiveOperation, 300);
+
+    // This will only execute once, 300ms after the last call
+    debouncedOperation();
+    debouncedOperation();
+    debouncedOperation();
+    ``` 
+
+    Throttling:
+    - Throttling is used to limit the rate at which a function is called.
+    - It ensures that a function is called at most once in a given time period.
+    - If the function is called again within the time period, it is ignored until the time period has elapsed.
+    - Throttling is useful for optimizing performance by limiting the number of times a function is called.
+
+    Example of throttling:
+    ```javascript
+    function throttle(func, limit) {
+      let inThrottle;
+      return function(...args) {
+        if (!inThrottle) {
+          func.apply(this, args);
+          inThrottle = true;
+          setTimeout(() => inThrottle = false, limit);
+        }
+      }
+    }
+
+    // Usage example:
+    const expensiveOperation = () => {
+      console.log('Performing expensive operation...');
+      // ... some expensive computation
+    };
+
+    const throttledOperation = throttle(expensiveOperation, 1000);
+
+    // This will execute immediately, then at most once per second
+    throttledOperation();
+    throttledOperation();
+    throttledOperation();
+    ```
+
+    In summary, debouncing is used to delay the execution of a function until a certain amount of time has passed without the function being called again, while throttling is used to limit the rate at which a function is called.  
+    
 
 ### Scenario based questions
 
